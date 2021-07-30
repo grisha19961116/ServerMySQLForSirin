@@ -1,4 +1,15 @@
-- `npm start` &mdash; старт сервера в режиме production
-- `npm run start:dev` &mdash; старт сервера в режиме разработки (development)
-- `npm run lint` &mdash; запустить выполнение проверки кода с eslint, необходимо выполнять перед каждым PR и исправлять все ошибки линтера
-- `npm lint:fix` &mdash; та же проверка линтера, но с автоматическими исправлениями простых ошибок
+- `npm start` &mdash; start server in (production)
+- `npm run start:dev` &mdash;start server in  (development)
+- `npm run lint` &mdash; start checking code eslint,necessary execute before each  PR and fix all mistakes linter 
+- `npm lint:fix` &mdash; same check linter but with auto fix simple mistakes 
+!Vital*,You can use SiriniServer.postman_collection.json from this app to add ready config to your Postman
+
+- `npx sequelize-cli db:migrate` &mdash; invoke migrations 
+ settings to create your own MySQL and connect to The server : {
+    "username": "root",
+    "password": "1996",
+    "database": "my_db",
+    "host": "localhost",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },

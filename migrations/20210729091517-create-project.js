@@ -13,9 +13,13 @@ module.exports = {
       },
       project: {
         type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
       },
       url: {
         type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
       },
       stars: {
         type: Sequelize.INTEGER,
