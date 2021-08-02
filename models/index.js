@@ -14,7 +14,6 @@ const sequelize = new Sequelize({
   database: config.database,
   host: config.host,
   dialect: config.dialect,
-  // operatorsAliases : config.operatorsAliases
 });
 
 fs.readdirSync(__dirname)

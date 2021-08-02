@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
+
   Project.init(
     {
       name: DataTypes.STRING,
@@ -17,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       stars: DataTypes.INTEGER,
       forks: DataTypes.INTEGER,
       problems: DataTypes.INTEGER,
-      data: DataTypes.INTEGER,
+      constructed: DataTypes.STRING,
       owner: DataTypes.INTEGER,
     },
     {

@@ -10,6 +10,7 @@
     "dev:debug": "node --inspect ./bin/server.js"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "bcryptjs": "2.4.3",
     "cors": "2.8.5",
     "cross-env": "7.0.3",

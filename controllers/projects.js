@@ -1,12 +1,13 @@
+const axios = require("axios");
+
 const Projects = require("../models").Project;
+const { HttpCode } = require("../helpers/constants");
 
 const getAll = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const projects = await Projects.findAll({ where: { owner: userId } });
-    return res.json({
-      status: "success",
-      code: 200,
+    return res.status(HttpCode.OK).json({
       data: {
         projects,
       },
@@ -23,20 +24,15 @@ const getById = async (req, res, next) => {
       where: { id: req.params.id, owner: userId },
     });
     if (project) {
-      return res.json({
-        status: "success",
-        code: 200,
+      return res.status(HttpCode.OK).json({
         data: {
           project,
         },
       });
-    } else {
-      return res.status(404).json({
-        status: "error",
-        code: 404,
-        data: "Not Found",
-      });
     }
+    return res.status(HttpCode.NO_FOUND).json({
+      message: "NOT FOUND",
+    });
   } catch (e) {
     next(e);
   }
@@ -45,14 +41,48 @@ const getById = async (req, res, next) => {
 const create = async (req, res, next) => {
   try {
     const userId = req.user.id;
-    const project = await Projects.create({ ...req.body, owner: userId });
-    return res.status(201).json({
-      status: "success",
-      code: 201,
-      data: {
-        project,
-      },
+    const { name, project } = req.body;
+    const dataFetch = await axios.get(
+      `http://api.github.com/repos/${name}/${project}`,
+      {
+        headers: {
+          Authorization: `No Auth`,
+        },
+      }
+    );
+    const {
+      url,
+      stargazers_count,
+      forks_count,
+      open_issues_count,
+      created_at,
+    } = await dataFetch.data;
+
+    const newProject = await {
+      name,
+      project,
+      url,
+      stars: stargazers_count,
+      forks: forks_count,
+      problems: open_issues_count,
+      constructed: created_at,
+    };
+    console.log(created_at, `time`);
+    const createdProject = await Projects.create({
+      ...newProject,
+      owner: userId,
     });
+    if (createdProject) {
+      return res.status(HttpCode.CREATED).json({
+        data: {
+          createdProject,
+        },
+      });
+    } else {
+      return res.status(HttpCode.NO_FOUND).json({
+        message: "NOT FOUND",
+      });
+    }
   } catch (e) {
     next(e);
   }
@@ -68,20 +98,15 @@ const remove = async (req, res, next) => {
       await Projects.destroy({
         where: { id: req.params.id, owner: userId },
       });
-      return res.json({
-        status: "success",
-        code: 200,
+      return res.status(HttpCode.OK).json({
         data: {
           project,
         },
       });
-    } else {
-      return res.status(404).json({
-        status: "error",
-        code: 404,
-        data: "Not Found",
-      });
     }
+    return res.status(HttpCode.NO_FOUND).json({
+      message: "NOT FOUND",
+    });
   } catch (e) {
     next(e);
   }
@@ -97,20 +122,16 @@ const update = async (req, res, next) => {
       where: { id: req.params.id, owner: userId },
     });
     if (project) {
-      return res.json({
-        status: "success",
-        code: 200,
+      return res.status(HttpCode.OK).json({
         data: {
           project,
         },
       });
-    } else {
-      return res.status(404).json({
-        status: "error",
-        code: 404,
-        data: "Not Found",
-      });
     }
+
+    return res.status(HttpCode.NO_FOUND).json({
+      message: "NOT FOUND",
+    });
   } catch (e) {
     next(e);
   }

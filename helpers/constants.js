@@ -1,5 +1,6 @@
 const HttpCode = {
   OK: 200,
+  NO_FOUND: 404,
   CREATED: 201,
   NO_CONTENT: 204,
   BAD_REQUEST: 400,

@@ -14,12 +14,12 @@ module.exports = {
       project: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
       },
       url: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
       },
       stars: {
         type: Sequelize.INTEGER,
@@ -30,8 +30,8 @@ module.exports = {
       problems: {
         type: Sequelize.INTEGER,
       },
-      data: {
-        type: Sequelize.INTEGER,
+      constructed: {
+        type: Sequelize.STRING,
       },
       owner: {
         type: Sequelize.INTEGER,
